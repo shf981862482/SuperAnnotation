@@ -11,7 +11,6 @@ http://blog.csdn.net/qq_28195645/article/details/52097626
 ```
     dependencies {
         classpath 'com.android.tools.build:gradle:2.1.2'
-        classpath 'com.frogermcs.androiddevmetrics:androiddevmetrics-plugin:0.4'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
