@@ -5,6 +5,39 @@ http://blog.csdn.net/qq_28195645/article/details/52097626
 在app开发中，难免要做一些sdcard的操作
 比如：判断sdcard存在，生成相应目录， 删除文件等；
 
+我们可以通过注解来自动生成如下的文件
+
+外层build.gradle
+```
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'com.frogermcs.androiddevmetrics:androiddevmetrics-plugin:0.4'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+```
+
+app build.radle
+```
+apply plugin: 'com.android.application'
+//注解处理器
+apply plugin: 'com.neenbedankt.android-apt'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['**.*'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    //注解处理器
+    compile 'com.google.auto.service:auto-service:1.0-rc2'
+    compile 'com.squareup:javapoet:1.7.0'
+//    apt "com.mmwork:compiler:0.3.0"
+//    compile 'com.mmwork:annotaion:0.2.1'
+    apt project(':processor')
+    compile project(':annotation')
+}
+```
+
 #SDCardUtil
 
 ```
