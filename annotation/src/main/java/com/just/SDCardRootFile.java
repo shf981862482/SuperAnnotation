@@ -10,10 +10,9 @@ import java.lang.annotation.Target;
  * Created by zhai on 16/6/21.
  */
 @Documented
-@Target({ElementType.FIELD, ElementType.TYPE})
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.CLASS)
 public @interface SDCardRootFile {
-
     //filenames
     String[] fileNames() default {};
 

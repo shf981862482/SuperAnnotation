@@ -22,6 +22,7 @@ import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
+import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
@@ -35,6 +36,7 @@ import javax.tools.Diagnostic;
  * SDUtils paser
  */
 @AutoService(Processor.class)
+@SupportedAnnotationTypes({"com.just.annotations.SDCardRootFile"})
 public class SDcardProcessor extends AbstractProcessor {
 
     private static final String CLASS_NAME = "SDCardUtil";
@@ -81,14 +83,14 @@ public class SDcardProcessor extends AbstractProcessor {
     /**
      *
      * @param annotations
-     * @param roundEnv  注释处理工具框架将提供一个注解处理器实现了这个接口的对象,以便处理器可以查询信息的注释处理
+     * @param roundEnv  ??????????????????????????????????????,????????????????????????
      * @return
      */
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         ArrayList<SDcardAnnotatedClass> annotatedClasses = new ArrayList<>();
         //SDCardRootFile
-//        roundEnv.getElementsAnnotatedWith(SDCardRootFile.class)  // 获得被该注解声明的元素
+//        roundEnv.getElementsAnnotatedWith(SDCardRootFile.class)  // ??????????????????
         for (Element element : roundEnv.getElementsAnnotatedWith(SDCardRootFile.class)) {
             //if public Field
             if (!ProcessorUtil.isFinalValidField(element, messager, ANNOTATION)) {

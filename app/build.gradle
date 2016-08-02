@@ -1,9 +1,19 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.frogermcs.androiddevmetrics'
 //注解处理器
 apply plugin: 'com.neenbedankt.android-apt'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
+
+    signingConfigs {
+        config {
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storeFile file('debug.keystore')
+            storePassword 'android'
+        }
+    }
 
     defaultConfig {
         applicationId "com.sun.superannotation"
@@ -11,25 +21,55 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+        signingConfig signingConfigs.config
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
             minifyEnabled false
+            zipAlignEnabled true
+            signingConfig signingConfigs.config
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            signingConfig signingConfigs.config
+        }
     }
-    compileOptions {
+/*    compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
+    }*/
+
+    productFlavors {
+        trunk {
+        }
+        official {
+        }
+    }
+    dexOptions {
+        incremental true
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    lintOptions {
+        abortOnError false
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(dir: 'libs', include: ['**.*'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.squareup:javapoet:1.7.0'
+    //注解处理器
     compile 'com.google.auto.service:auto-service:1.0-rc2'
-    apt project(':processor')
-    compile project(':annotation')
+    compile 'com.squareup:javapoet:1.7.0'
+//    apt project(':processor')
+    apt "com.mmwork:compiler:0.3.0"
+    compile 'com.mmwork:annotaion:0.2.1'
+//    compile project(':annotation')
 }
