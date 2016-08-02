@@ -2,7 +2,8 @@ package com.just.sdcardProcessor;
 
 
 
-import com.just.annotations.SDCardRootFile;
+
+import com.just.SDCardRootFile;
 
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;

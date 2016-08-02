@@ -3,7 +3,8 @@ package com.sun.superannotation;
 
 
 
-import com.mm.annotation.SDCardRootFile;
+
+import com.just.SDCardRootFile;
 
 import java.io.Serializable;
 

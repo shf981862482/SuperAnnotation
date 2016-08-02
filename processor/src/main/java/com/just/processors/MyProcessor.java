@@ -1,7 +1,8 @@
 package com.just.processors;
 
 
-import com.just.annotations.Serialize;
+
+import com.just.Serialize;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -29,7 +30,7 @@ import javax.lang.model.util.Elements;
  */
 public class MyProcessor extends AbstractProcessor {
 
-    //元素操作辅助类
+    //????????????
     private Elements elementUtils;
 
     @Override
@@ -40,26 +41,26 @@ public class MyProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        //获取被该注解声明的元素
+        //???????????????????
         Set<? extends Element> elements = roundEnv.getElementsAnnotatedWith(Serialize.class);
 
-        TypeElement classElement = null;//声明类元素
+        TypeElement classElement = null;//?????????
 
-        List<VariableElement> fields = null;//声明一个存放成员变量的列表
+        List<VariableElement> fields = null;//???????????????????б?
 
-        //将两者存放起来
+        //????????????
         Map<String, List<VariableElement>> maps = new HashMap<>();
 
-        //遍历
+        //????
         for (Element ele : elements) {
             if (ele.getKind() == ElementKind.CLASS) {
                 classElement = (TypeElement) ele;
                 maps.put(classElement.getQualifiedName().toString(), fields = new ArrayList<>());
-            } else if (ele.getKind() == ElementKind.FIELD) {//判断该元素是否为成员变量
+            } else if (ele.getKind() == ElementKind.FIELD) {//?ж????????????????
                 VariableElement varEle = (VariableElement) ele;
-                //获取该元素封装类型
+                //??????????????
                 TypeElement enclosingElement = (TypeElement) varEle.getEnclosedElements();
-                //拿到key
+                //???key
                 String key = enclosingElement.getQualifiedName().toString();
                 fields = maps.get(key);
                 if (fields == null) {
@@ -90,12 +91,12 @@ public class MyProcessor extends AbstractProcessor {
         if (!dir.exists()){
             dir.mkdirs();
         }
-        //遍历map
+        //????map
         for (String key :maps.keySet()){
-            //创建文件
+            //???????
             File file  = new File(dir,key.replaceAll("\\.","_")+".txt");
             try {
-                //编写文件内容
+                //??д???????
                 FileWriter fw = new FileWriter(file);
                 fw.append("{").append("class:").append("\"" + key + "\"").append(",\n ");
                 fw.append("fields:\n {\n");
