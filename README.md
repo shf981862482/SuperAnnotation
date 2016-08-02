@@ -31,10 +31,8 @@ dependencies {
     //注解处理器
     compile 'com.google.auto.service:auto-service:1.0-rc2'
     compile 'com.squareup:javapoet:1.7.0'
-//    apt "com.mmwork:compiler:0.3.0"
-//    compile 'com.mmwork:annotaion:0.2.1'
-    apt project(':processor')
-    compile project(':annotation')
+    compile 'com.sun_multi:annotaion:0.0.3'
+    apt'com.sun_multi:compiler:0.0.2'
 }
 ```
 
