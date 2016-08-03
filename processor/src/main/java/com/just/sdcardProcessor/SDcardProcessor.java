@@ -22,6 +22,8 @@ import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
+import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
@@ -29,12 +31,12 @@ import javax.lang.model.element.VariableElement;
 import javax.tools.Diagnostic;
 
 
-
 /**
  * Created by zhai on 16/6/21.
- * SDUtils解析类
+ * SDUtils paser
  */
 @AutoService(Processor.class)
+@SupportedAnnotationTypes({"com.just.annota1tions.SDCardRootFile"})
 public class SDcardProcessor extends AbstractProcessor {
 
     private static final String CLASS_NAME = "SDCardUtil";
@@ -66,6 +68,11 @@ public class SDcardProcessor extends AbstractProcessor {
         return annotataions;
     }
 
+    @Override
+    public SourceVersion getSupportedSourceVersion() {
+        return super.getSupportedSourceVersion();
+//        return SourceVersion.latestSupported();
+    }
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
@@ -73,19 +80,24 @@ public class SDcardProcessor extends AbstractProcessor {
         messager = processingEnv.getMessager();
     }
 
+    /**
+     * @param annotations
+     * @param roundEnv    ??????????????????????????????????????,????????????????????????
+     * @return
+     */
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         ArrayList<SDcardAnnotatedClass> annotatedClasses = new ArrayList<>();
         //SDCardRootFile
-
+//        roundEnv.getElementsAnnotatedWith(SDCardRootFile.class)  // ??????????????????
         for (Element element : roundEnv.getElementsAnnotatedWith(SDCardRootFile.class)) {
-            //判断是否是public Field
+            //if public Field
             if (!ProcessorUtil.isFinalValidField(element, messager, ANNOTATION)) {
                 return true;
             }
             VariableElement variableElement = (VariableElement) element;
             try {
-                //解析
+                //paser
                 annotatedClasses.add(buildAnnotVariabldSDcardClass(variableElement));
             } catch (IOException e) {
                 String message = String.format("Couldn't processvariablass %s: .%s", variableElement,
@@ -122,14 +134,14 @@ public class SDcardProcessor extends AbstractProcessor {
      */
     private SDcardAnnotatedClass buildAnnotVariabldSDcardClass(VariableElement annotatedClass)
             throws IOException {
-        //        ArrayList<String> variableNames = new ArrayList<>();
-        //        for (Element element : annotatedClass.getEnclosedElements()) {
-        //            if (!(element instanceof VariableElement)) {
-        //                continue;
-        //            }
-        //            VariableElement variableElement = (VariableElement) element;
-        //            variableNames.add(variableElement.getSimpleName().toString());
-        //        }
+//        ArrayList<String> variableNames = new ArrayList<>();
+//        for (Element element : annotatedClass.getEnclosedElements()) {
+//            if (!(element instanceof VariableElement)) {
+//                continue;
+//            }
+//            VariableElement variableElement = (VariableElement) element;
+//            variableNames.add(variableElement.getSimpleName().toString());
+//        }
         return new SDcardAnnotatedClass(annotatedClass);
     }
 

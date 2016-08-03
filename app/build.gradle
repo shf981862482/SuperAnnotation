@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.frogermcs.androiddevmetrics'
 //注解处理器
 apply plugin: 'com.neenbedankt.android-apt'
 android {
@@ -68,8 +67,8 @@ dependencies {
     //注解处理器
     compile 'com.google.auto.service:auto-service:1.0-rc2'
     compile 'com.squareup:javapoet:1.7.0'
-    apt project(':processor')
 //    apt "com.mmwork:compiler:0.3.0"
 //    compile 'com.mmwork:annotaion:0.2.1'
+    apt project(':processor')
     compile project(':annotation')
 }
